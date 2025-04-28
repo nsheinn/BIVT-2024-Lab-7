@@ -3,7 +3,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.JavaScript;
 
-namespace Lab_6;
+namespace Lab_7;
 
 public class Blue_3
 {
@@ -105,7 +105,12 @@ public class Blue_3
 
         }
         public BasketballPlayer(string name, string surname) : base(name, surname) {}
-        
+
+        public override void PlayMatch(int fouls)
+        {
+            if (fouls < 0 || fouls > 5) return;
+            base.PlayMatch(fouls);
+        }
     }
 
     public class HockeyPlayer : Participant

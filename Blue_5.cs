@@ -3,7 +3,7 @@ using System.Linq;
 using System.Reflection;
 using System.Linq.Expressions;
 
-namespace Lab_6;
+namespace Lab_7;
 
 public class Blue_5
 {
@@ -61,7 +61,7 @@ public class Blue_5
                 int[] scores = new int[]{0,5,4,3,2,1};
                 int sum = 0;
                 foreach (var x in _sportsmen)
-                    if (1 <= x.Place && x.Place <= 5)
+                    if (x != null && 1 <= x.Place && x.Place <= 5)
                     {
                         sum+=scores[x.Place];
                     }
@@ -73,7 +73,7 @@ public class Blue_5
         {
             get
             {
-                if (_sportsmen == null) return 18;
+                if (_sportsmen == null || _sportsmen.Length == 0) return 18;
                 int minPlace = 18;
                 foreach (var x in _sportsmen)
                 {
@@ -138,7 +138,8 @@ public class Blue_5
             Console.WriteLine("Sportsmen:");
             foreach (var x in _sportsmen)
             {
-                Console.WriteLine($"{x.Name} {x.Surname}. Место - {x.Place}");
+                if (x!= null)
+                    Console.WriteLine($"{x.Name} {x.Surname}. Место - {x.Place}");
             }
         }
 

@@ -88,13 +88,15 @@ public class Blue_4
         public void Add(Team team)
         {
             if (team == null) return;
-            if (_womanTeamIndex >= 12 || _manTeamIndex >= 12) return;
-            if (team is ManTeam manTeam) _manTeams[_manTeamIndex++] = manTeam;
-            if (team is WomanTeam womanTeam) _womanTeams[_womanTeamIndex++] = womanTeam;
+            if (team is ManTeam manTeam && _manTeamIndex < _manTeams.Length) 
+                _manTeams[_manTeamIndex++] = manTeam;
+            else if (team is WomanTeam womanTeam && _womanTeamIndex < _womanTeams.Length) 
+                _womanTeams[_womanTeamIndex++] = womanTeam;
         }
 
         public void Add(Team[] teams)
         {
+            if (teams == null || teams.Length == 0) return;
             foreach (var team in teams) Add(team);
         }
 
@@ -106,25 +108,24 @@ public class Blue_4
         private void SortTeams(Team[] teams)
         {
             if (teams == null) return;
-            for (int i = 1; i < teams.Length; i++)
+            for (int i = 0; i < teams.Length - 1; i++)
             {
-                var current = teams[i];
-                int j = i - 1;
-                while (j >= 0 && teams[j] != null &&teams[j].TotalScore < current.TotalScore)
+                for (int j = 0; j < teams.Length - i - 1; j++)
                 {
-                    teams[j + 1] = teams[j];
-                    j--;
+                    if (teams[j] != null && teams[j + 1] != null && teams[j].TotalScore < teams[j + 1].TotalScore)
+                    {
+                        (teams[j], teams[j + 1]) = (teams[j + 1], teams[j]);
+                    }
                 }
-                teams[j + 1] = current;
             }
         }
 
         public static Group Merge(Group group1, Group group2, int size)
         {
             Group result = new Group("Финалисты");
-            Team[] man = MergeTeams(group1._manTeams, group2._manTeams, size);
+            Team[] men = MergeTeams(group1._manTeams, group2._manTeams, size);
             Team[] women = MergeTeams(group1._womanTeams, group2._womanTeams, size);
-            result.Add(man);
+            result.Add(men);
             result.Add(women);
             return result;
 
