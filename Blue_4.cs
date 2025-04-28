@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 
-namespace Lab_6;
+namespace Lab_7;
 
 public class Blue_4
 {
